@@ -71,17 +71,3 @@ Set-Alias vs2013 Set-VS2013
 Set-Alias vs2015 Set-VS2015
 Set-Alias waik Set-WAIK
 
-Export-ModuleMember -Function `
-    Set-VS2010,
-    Set-VS2012,
-    Set-VS2013,
-    Set-VS2015,
-    Set-WAIK
-
-Export-ModuleMember -Alias `
-    vs2010,
-    vs2012,
-    vs2013,
-    vs2015,
-    waik
-
