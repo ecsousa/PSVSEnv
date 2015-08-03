@@ -20,7 +20,12 @@ Note: each one of these functions needs the related software installed.
 
 ## Installing
 
-If you have [PsGet](http://psget.net/) installed:
+Windows 10 users:
+
+    Install-Module PSVSEnv -Scope CurrentUser
+
+Otherwise, if you have [PsGet](http://psget.net/) installed:
+
 
     Install-Module PSVSEnv
   
