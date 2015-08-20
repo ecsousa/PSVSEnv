@@ -10,4 +10,8 @@ CLRVersion = '4.0'
 FunctionsToExport = @('Set, VS2010', 'Set-VS2012', 'Set-VS2013', 'Set-VS2015', 'Set-WAIK')
 AliasesToExport = @('vs2010', 'vs2012', 'vs2013', 'vs2015', 'waik')
 HelpInfoURI = 'https://github.com/ecsousa/PSVSEnv'
+PrivateData = @{
+        Tags='VisualStudio'
+        ProjectUri='https://github.com/ecsousa/PSVSEnv'
+    }
 }
