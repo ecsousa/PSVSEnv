@@ -11,14 +11,7 @@ function Import-Env {
 
 [CmdletBinding]
 function Set-VSEnv {
-    param([string] $envVar, $batFile)
-
-    if(-not(Test-Path Env:$envVar)) {
-        Write-Warning "Environment variable $envVar is undefined"
-        return;
-    }
-
-    $vsvars32FullPath = Join-Path (Get-Item Env:$envVar).Value $batFile
+    param($vsvars32FullPath)
 
     if(-not(Test-Path $vsvars32FullPath)) {
         Write-Warning "Could not find file '$vsvars32FullPath'";
@@ -30,6 +23,35 @@ function Set-VSEnv {
     Import-Env $vsvars32FullPath
 }
 
+[CmdletBinding]
+function Set-VSEnvComnTools {
+    param([string] $envVar, $batFile)
+
+    if(-not(Test-Path Env:$envVar)) {
+        Write-Warning "Environment variable $envVar is undefined"
+        return;
+    }
+
+    $vsvars32FullPath = Join-Path (Get-Item Env:$envVar).Value $batFile
+
+    Set-VSEnv $vsvars32FullPath
+}
+
+[CmdletBinding]
+function Set-VSEnvVSWhere {
+    param([string] $version, $batFile)
+
+    $vsPath = & "$PSScriptRoot\vswhere.exe" -version $version -property installationPath
+
+    if(-not($vsPath)) {
+        Write-Warning "Could not find Visual Studio installation path for version '$version'"
+        return;
+    }
+
+    $vsvars32FullPath = Join-Path $vsPath $batFile
+
+    Set-VSEnv $vsvars32FullPath
+}
 
 [CmdletBinding]
 function Set-WAIK {
@@ -47,27 +69,34 @@ function Set-WAIK {
 
 [CmdletBinding]
 function Set-VS2010 {
-    Set-VSEnv 'VS100COMNTOOLS' 'vsvars32.bat'
+    Set-VSEnvComnTools 'VS100COMNTOOLS' 'vsvars32.bat'
 }
 
 [CmdletBinding]
 function Set-VS2012 {
-    Set-VSEnv 'VS110COMNTOOLS' 'vsvars32.bat'
+    Set-VSEnvComnTools 'VS110COMNTOOLS' 'vsvars32.bat'
 }
 
 [CmdletBinding]
 function Set-VS2013 {
-    Set-VSEnv 'VS120COMNTOOLS' 'vsvars32.bat'
+    Set-VSEnvComnTools 'VS120COMNTOOLS' 'vsvars32.bat'
 }
 
 [CmdletBinding]
 function Set-VS2015 {
-    Set-VSEnv 'VS140COMNTOOLS' 'VsDevCmd.bat'
+    Set-VSEnvComnTools 'VS140COMNTOOLS' 'VsDevCmd.bat'
 }
+
+[CmdletBinding]
+function Set-VS2017 {
+    Set-VSEnvVSWhere '[15.0,16.0)' 'Common7\Tools\VsDevCmd.bat'
+}
+
 
 Set-Alias vs2010 Set-VS2010
 Set-Alias vs2012 Set-VS2012
 Set-Alias vs2013 Set-VS2013
 Set-Alias vs2015 Set-VS2015
+Set-Alias vs2017 Set-VS2017
 Set-Alias waik Set-WAIK
 
