@@ -1,12 +1,25 @@
 
+
 function Import-Env {
     param([string] $batFile)
 
-    $cmd = "`"$batFile`" & set"
+    if($Script:Environment) {
+        ForEach($key in $Script:Environment.Keys) {
+            Set-Item -path env:$key -value $Script:Environment[$key]
+        }
+    }
+
+    $Script:Environment = @{};
+
+    $cmd = "`"$batFile`" > nul & set"
     cmd /c $cmd | Foreach-Object {
         $p, $v = $_.split('=')
+        $orig = $null
+        $orig = Get-Content Env:$p -ErrorAction SilentlyContinue
+        $Script:Environment[$p] = $orig
         Set-Item -path env:$p -value $v
     }
+
 }
 
 [CmdletBinding]

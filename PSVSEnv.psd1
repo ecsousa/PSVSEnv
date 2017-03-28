@@ -1,6 +1,6 @@
 @{
 RootModule = 'PSVSEnv.psm1'
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.1'
 GUID = '201afb4b-c530-405a-a5cf-745fe70e2654'
 Author = 'Eduardo Sousa'
 Description = 'Functions loading Visual Studio environment variables'
