@@ -105,11 +105,16 @@ function Set-VS2017 {
     Set-VSEnvVSWhere '[15.0,16.0)' 'Common7\Tools\VsDevCmd.bat'
 }
 
+[CmdletBinding]
+function Set-VS2019 {
+    Set-VSEnvVSWhere '[16.0,17.0)' 'Common7\Tools\VsDevCmd.bat'
+}
 
 Set-Alias vs2010 Set-VS2010
 Set-Alias vs2012 Set-VS2012
 Set-Alias vs2013 Set-VS2013
 Set-Alias vs2015 Set-VS2015
 Set-Alias vs2017 Set-VS2017
+Set-Alias vs2019 Set-VS2019
 Set-Alias waik Set-WAIK
 
