@@ -7,6 +7,7 @@ PowerShell module for loading Visual Studio Environment variables. It provides t
 * `Set-VS2013`: Loads environment variables for Visual Studio 2013
 * `Set-VS2015`: Loads environment variables for Visual Studio 2015
 * `Set-VS2017`: Loads environment variables for Visual Studio 2017
+* `Set-VS2019`: Loads environment variables for Visual Studio 2019
 * `Set-WAIK`: Loads environment variables for Windows Automated Instaltion Kit
 
 This module also provides two aliases:
@@ -16,6 +17,7 @@ This module also provides two aliases:
 * `vs2013`: alias to `Set-VS2013`
 * `vs2015`: alias to `Set-VS2015`
 * `vs2017`: alias to `Set-VS2017`
+* `vs2019`: alias to `Set-VS2019`
 * `waik`: alias to `Set-WAIK`
 
 Note: each one of these functions needs the related software installed.
