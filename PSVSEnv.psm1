@@ -1,7 +1,13 @@
 
 
 function Import-Env {
-    param([string] $batFile)
+    param(
+        [string]$batFile,
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture,
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture
+    )
 
     if($Script:Environment) {
         ForEach($key in $Script:Environment.Keys) {
@@ -11,7 +17,7 @@ function Import-Env {
 
     $Script:Environment = @{};
 
-    $cmd = "`"$batFile`" > nul & set"
+    $cmd = "`"$batFile`" -arch=$Architecture -host_arch=$HostArchitecture > nul & set"
     cmd /c $cmd | Foreach-Object {
         $p, $v = $_.split('=')
         $orig = $null
@@ -24,7 +30,13 @@ function Import-Env {
 
 [CmdletBinding]
 function Set-VSEnv {
-    param($vsvars32FullPath)
+    param(
+        $vsvars32FullPath,
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture,
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture
+    )
 
     if(-not(Test-Path $vsvars32FullPath)) {
         Write-Warning "Could not find file '$vsvars32FullPath'";
@@ -33,7 +45,7 @@ function Set-VSEnv {
 
     Write-Verbose "Importing Visual Studio environment variables from '$vsvars32FullPath'";
 
-    Import-Env $vsvars32FullPath
+    Import-Env $vsvars32FullPath -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
 [CmdletBinding]
@@ -52,7 +64,14 @@ function Set-VSEnvComnTools {
 
 [CmdletBinding]
 function Set-VSEnvVSWhere {
-    param([string] $version, $batFile)
+    param(
+        [string]$version, 
+        $batFile,
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture,
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture
+    )
 
     $vsPath = & "$PSScriptRoot\vswhere.exe" -version $version -property installationPath
 
@@ -63,7 +82,7 @@ function Set-VSEnvVSWhere {
 
     $vsvars32FullPath = Join-Path $vsPath $batFile
 
-    Set-VSEnv $vsvars32FullPath
+    Set-VSEnv $vsvars32FullPath -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
 [CmdletBinding]
@@ -102,17 +121,35 @@ function Set-VS2015 {
 
 [CmdletBinding]
 function Set-VS2017 {
-    Set-VSEnvVSWhere '[15.0,16.0)' 'Common7\Tools\VsDevCmd.bat'
+    param(
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture = "x86",
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture = "x86"
+    )
+    Set-VSEnvVSWhere -version '[15.0,16.0)' -batFile 'Common7\Tools\VsDevCmd.bat' -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
 [CmdletBinding]
 function Set-VS2019 {
-    Set-VSEnvVSWhere '[16.0,17.0)' 'Common7\Tools\VsDevCmd.bat'
+    param(
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture = "x86",
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture = "x86"
+    )
+    Set-VSEnvVSWhere -version '[16.0,17.0)' -batFile 'Common7\Tools\VsDevCmd.bat' -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
 [CmdletBinding]
 function Set-VS2022 {
-    Set-VSEnvVSWhere '[17.0,18.0)' 'Common7\Tools\VsDevCmd.bat'
+    param(
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture = "x86",
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture = "x86"
+    )
+    Set-VSEnvVSWhere -version '[17.0,18.0)' -batFile 'Common7\Tools\VsDevCmd.bat' -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
 Set-Alias vs2010 Set-VS2010
