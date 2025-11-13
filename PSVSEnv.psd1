@@ -1,6 +1,6 @@
 @{
 RootModule = 'PSVSEnv.psm1'
-ModuleVersion = '1.3.0'
+ModuleVersion = '1.4.0'
 GUID = '201afb4b-c530-405a-a5cf-745fe70e2654'
 Author = 'Eduardo Sousa'
 Description = 'Functions loading Visual Studio environment variables'
@@ -15,6 +15,7 @@ FunctionsToExport = @(
     'Set-VS2017',
     'Set-VS2019',
     'Set-VS2022',
+    'Set-VS2026',
     'Set-WAIK')
 AliasesToExport = @(
     'vs2010',
@@ -24,6 +25,7 @@ AliasesToExport = @(
     'vs2017',
     'vs2019',
     'vs2022',
+    'vs2026',
     'waik')
 HelpInfoURI = 'https://github.com/ecsousa/PSVSEnv'
 PrivateData = @{

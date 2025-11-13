@@ -1,5 +1,4 @@
 
-
 function Import-Env {
     param(
         [string]$batFile,
@@ -152,6 +151,17 @@ function Set-VS2022 {
     Set-VSEnvVSWhere -version '[17.0,18.0)' -batFile 'Common7\Tools\VsDevCmd.bat' -Architecture $Architecture -HostArchitecture $HostArchitecture
 }
 
+[CmdletBinding]
+function Set-VS2026 {
+    param(
+        [ValidateSet("x86","amd64","arm","arm64")]
+        [string]$Architecture = "x86",
+        [ValidateSet("x86","amd64")]
+        [string]$HostArchitecture = "x86"
+    )
+    Set-VSEnvVSWhere -version '[18.0,19.0)' -batFile 'Common7\Tools\VsDevCmd.bat' -Architecture $Architecture -HostArchitecture $HostArchitecture
+}
+
 Set-Alias vs2010 Set-VS2010
 Set-Alias vs2012 Set-VS2012
 Set-Alias vs2013 Set-VS2013
@@ -159,5 +169,6 @@ Set-Alias vs2015 Set-VS2015
 Set-Alias vs2017 Set-VS2017
 Set-Alias vs2019 Set-VS2019
 Set-Alias vs2022 Set-VS2022
+Set-Alias vs2026 Set-VS2026
 Set-Alias waik Set-WAIK
 
